@@ -1,12 +1,11 @@
 package com.harkin.luas.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.activeandroid.Model;
 
 /**
  * Created by henry on 15/07/2014.
  */
-public class Stop {
+public class Stop extends Model {
     private int stopid;
     private String displaystopid;
     private String shortname;
@@ -16,7 +15,7 @@ public class Stop {
     private String latitude;
     private String longitude;
     private String lastupdated;
-    private List<Operator> operators = new ArrayList<Operator>();
+//    private List<Operator> operators = new ArrayList<Operator>();
 
     public int getStopid() {
         return stopid;
@@ -90,11 +89,11 @@ public class Stop {
         this.lastupdated = lastupdated;
     }
 
-    public List<Operator> getOperators() {
-        return operators;
-    }
-
-    public void setOperators(List<Operator> operators) {
-        this.operators = operators;
-    }
+//    public List<Operator> getOperators() {
+//        return operators;
+//    }
+//
+//    public void setOperators(List<Operator> operators) {
+//        this.operators = operators;
+//    }
 }
