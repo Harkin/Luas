@@ -1,0 +1,544 @@
+{
+  "stations": [
+    {
+      "shortName": "STS",
+      "displayName": "St. Stephen's Green",
+      "displayIrishName": "Faiche Stiabhna",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.339072,
+        "longitude": -6.261333
+      }
+    },
+    {
+      "shortName": "HAR",
+      "displayName": "Harcourt Street",
+      "displayIrishName": "Sráid Fhearchair",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.333358,
+        "longitude": -6.26265
+      }
+    },
+    {
+      "shortName": "CHA",
+      "displayName": "Charlemont",
+      "displayIrishName": "Charlemont",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.330669,
+        "longitude": -6.258683
+      }
+    },
+    {
+      "shortName": "RAN",
+      "displayName": "Ranelagh",
+      "displayIrishName": "Raghnallach",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.326433,
+        "longitude": -6.256203
+      }
+    },
+    {
+      "shortName": "BEE",
+      "displayName": "Beechwood",
+      "displayIrishName": "Coill na Feá",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.320822,
+        "longitude": -6.254653
+      }
+    },
+    {
+      "shortName": "COW",
+      "displayName": "Cowper",
+      "displayIrishName": "Cowper",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.316467,
+        "longitude": -6.253447
+      }
+    },
+    {
+      "shortName": "MIL",
+      "displayName": "Milltown",
+      "displayIrishName": "Baile an Mhuilinn",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.309917,
+        "longitude": -6.251728
+      }
+    },
+    {
+      "shortName": "WIN",
+      "displayName": "Windy Arbour",
+      "displayIrishName": "Na Glasáin",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.301558,
+        "longitude": -6.250708
+      }
+    },
+    {
+      "shortName": "DUN",
+      "displayName": "Dundrum",
+      "displayIrishName": "Dún Droma",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.292358,
+        "longitude": -6.245117
+      }
+    },
+    {
+      "shortName": "BAL",
+      "displayName": "Balally",
+      "displayIrishName": "Baile Amhlaoibh",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.286106,
+        "longitude": -6.236772
+      }
+    },
+    {
+      "shortName": "KIL",
+      "displayName": "Kilmacud",
+      "displayIrishName": "Cill Mochuda",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.283008,
+        "longitude": -6.223886
+      }
+    },
+    {
+      "shortName": "STI",
+      "displayName": "Stillorgan",
+      "displayIrishName": "Stigh Lorgan",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.279311,
+        "longitude": -6.209919
+      }
+    },
+    {
+      "shortName": "SAN",
+      "displayName": "Sandyford",
+      "displayIrishName": "Áth an Ghainimh",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.279311,
+        "longitude": -6.204678
+      }
+    },
+    {
+      "shortName": "CPK",
+      "displayName": "Central Park",
+      "displayIrishName": "An Pháirc Láir",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.27015,
+        "longitude": -6.203764
+      }
+    },
+    {
+      "shortName": "GLE",
+      "displayName": "Glencairn",
+      "displayIrishName": "Gleann an Chairn",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.266336,
+        "longitude": -6.209942
+      }
+    },
+    {
+      "shortName": "GAL",
+      "displayName": "The Gallops",
+      "displayIrishName": "An Eachrais",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.261164,
+        "longitude": -6.206022
+      }
+    },
+    {
+      "shortName": "LEO",
+      "displayName": "Leopardstown Valley",
+      "displayIrishName": "Gleann Bhaile na Lobhar",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.257996,
+        "longitude": -6.197485
+      }
+    },
+    {
+      "shortName": "BAW",
+      "displayName": "Ballyogan Wood",
+      "displayIrishName": "Coill Bhaile Uí Ógáin",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.255047,
+        "longitude": -6.184475
+      }
+    },
+    {
+      "shortName": "CCK",
+      "displayName": "Carrickmines",
+      "displayIrishName": "Carraig Mhaighin",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.254033,
+        "longitude": -6.169908
+      }
+    },
+    {
+      "shortName": "LAU",
+      "displayName": "Laughanstown",
+      "displayIrishName": "Baile an Locháin",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.250606,
+        "longitude": -6.155006
+      }
+    },
+    {
+      "shortName": "CHE",
+      "displayName": "Cherrywood",
+      "displayIrishName": "Coill na Silíní",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.245333,
+        "longitude": -6.145853
+      }
+    },
+    {
+      "shortName": "BRI",
+      "displayName": "Brides Glen",
+      "displayIrishName": "Gleann Bhríde",
+      "line": "Green",
+      "coordinates": {
+        "latitude": 53.242075,
+        "longitude": -6.142886
+      }
+    },
+    {
+      "shortName": "TPT",
+      "displayName": "The Point",
+      "displayIrishName": "Iosta na Rinne",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.34835,
+        "longitude": -6.229258
+      }
+    },
+    {
+      "shortName": "SDK",
+      "displayName": "Spencer Dock",
+      "displayIrishName": "Duga Spencer",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.348822,
+        "longitude": -6.237147
+      }
+    },
+    {
+      "shortName": "MYS",
+      "displayName": "Mayor Square (NCI)",
+      "displayIrishName": "Cearnóg an Mhéara - CNÉ",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.349247,
+        "longitude": -6.243394
+      }
+    },
+    {
+      "shortName": "GDK",
+      "displayName": "George's Dock",
+      "displayIrishName": "Duga Sheoirse",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.349528,
+        "longitude": -6.247575
+      }
+    },
+    {
+      "shortName": "CON",
+      "displayName": "Connolly",
+      "displayIrishName": "Conghaile",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.350922,
+        "longitude": -6.249942
+      }
+    },
+    {
+      "shortName": "BUS",
+      "displayName": "Bus Áras",
+      "displayIrishName": "Busáras",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.348589,
+        "longitude": -6.258172
+      }
+    },
+    {
+      "shortName": "ABB",
+      "displayName": "Abbey Street",
+      "displayIrishName": "Sráid na Mainistreach",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.348589,
+        "longitude": -6.258172
+      }
+    },
+    {
+      "shortName": "JER",
+      "displayName": "Jervis",
+      "displayIrishName": "Jervis",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.347686,
+        "longitude": -6.265333
+      }
+    },
+    {
+      "shortName": "FOU",
+      "displayName": "The Four Courts",
+      "displayIrishName": "Na Ceithre Cúirteanna",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.346864,
+        "longitude": -6.273436
+      }
+    },
+    {
+      "shortName": "SMI",
+      "displayName": "Smithfield",
+      "displayIrishName": "Margadh na Feirme",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.347133,
+        "longitude": -6.277728
+      }
+    },
+    {
+      "shortName": "MUS",
+      "displayName": "Museum",
+      "displayIrishName": "Ard-Mhúsaem",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.347867,
+        "longitude": -6.286714
+      }
+    },
+    {
+      "shortName": "HEU",
+      "displayName": "Heuston",
+      "displayIrishName": "Heuston",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.346647,
+        "longitude": -6.291808
+      }
+    },
+    {
+      "shortName": "JAM",
+      "displayName": "James'",
+      "displayIrishName": "Ospidéal San Séamas",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.341942,
+        "longitude": -6.293361
+      }
+    },
+    {
+      "shortName": "FAT",
+      "displayName": "Fatima",
+      "displayIrishName": "Fatima",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.338439,
+        "longitude": -6.292547
+      }
+    },
+    {
+      "shortName": "RIA",
+      "displayName": "Rialto",
+      "displayIrishName": "Rialto",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.337908,
+        "longitude": -6.297242
+      }
+    },
+    {
+      "shortName": "SUI",
+      "displayName": "Suir Road",
+      "displayIrishName": "Bóthar na Siúire",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.336617,
+        "longitude": -6.307211
+      }
+    },
+    {
+      "shortName": "GOL",
+      "displayName": "Goldenbridge",
+      "displayIrishName": "An Droichead Órga",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.335892,
+        "longitude": -6.313569
+      }
+    },
+    {
+      "shortName": "DRI",
+      "displayName": "Drimnagh",
+      "displayIrishName": "Droimeanach",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.335361,
+        "longitude": -6.318161
+      }
+    },
+    {
+      "shortName": "BLA",
+      "displayName": "Blackhorse",
+      "displayIrishName": "An Capall Dubh",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.334258,
+        "longitude": -6.327394
+      }
+    },
+    {
+      "shortName": "BLU",
+      "displayName": "Bluebell",
+      "displayIrishName": "An Cloigín Gorm",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.329297,
+        "longitude": -6.33396
+      }
+    },
+    {
+      "shortName": "KYL",
+      "displayName": "Kylemore",
+      "displayIrishName": "An Chill Mhór",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.326656,
+        "longitude": -6.343444
+      }
+    },
+    {
+      "shortName": "RED",
+      "displayName": "Red Cow",
+      "displayIrishName": "An Bhó Dhearg",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.316833,
+        "longitude": -6.369872
+      }
+    },
+    {
+      "shortName": "KIN",
+      "displayName": "Kingswood",
+      "displayIrishName": "Coill an Rí",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.303694,
+        "longitude": -6.36525
+      }
+    },
+    {
+      "shortName": "BEL",
+      "displayName": "Belgard",
+      "displayIrishName": "Belgard",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.299286,
+        "longitude": -6.374886
+      }
+    },
+    {
+      "shortName": "COO",
+      "displayName": "Cookstown",
+      "displayIrishName": "Baile an Chócaigh",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.293506,
+        "longitude": -6.384397
+      }
+    },
+    {
+      "shortName": "HOS",
+      "displayName": "Hospital",
+      "displayIrishName": "Ospidéal Thamhlachta",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.289369,
+        "longitude": -6.37885
+      }
+    },
+    {
+      "shortName": "TAL",
+      "displayName": "Tallaght",
+      "displayIrishName": "Tamhlacht",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.287494,
+        "longitude": -6.374589
+      }
+    },
+    {
+      "shortName": "FET",
+      "displayName": "Fettercairn",
+      "displayIrishName": "Fothair Chardain",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.293519,
+        "longitude": -6.395554
+      }
+    },
+    {
+      "shortName": "CVN",
+      "displayName": "Cheeverstown",
+      "displayIrishName": "Baile an tSíbhrigh",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.290982,
+        "longitude": -6.406849
+      }
+    },
+    {
+      "shortName": "CIT",
+      "displayName": "Citywest Campus",
+      "displayIrishName": "Campas Gnó Iarthar na Cathrach",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.287833,
+        "longitude": -6.418915
+      }
+    },
+    {
+      "shortName": "FOR",
+      "displayName": "Fortunestown",
+      "displayIrishName": "Baile Uí Fhoirtcheirn",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.284251,
+        "longitude": -6.424602
+      }
+    },
+    {
+      "shortName": "SAG",
+      "displayName": "Saggart",
+      "displayIrishName": "Teach Sagard",
+      "line": "Red",
+      "coordinates": {
+        "latitude": 53.284679,
+        "longitude": -6.43776255
+      }
+    }
+  ]
+}
