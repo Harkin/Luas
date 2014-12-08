@@ -1,27 +1,28 @@
-package com.harkin.luas.models;
+package com.harkin.luas.models.api;
 
-import com.activeandroid.Model;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by henry on 15/07/2014.
  */
-public class Stop extends Model {
-    private int stopid;
+public class Stop {
+    private String stopid;
     private String displaystopid;
     private String shortname;
     private String shortnamelocalized;
     private String fullname;
     private String fullnamelocalized;
-    private String latitude;
-    private String longitude;
+    private double latitude;
+    private double longitude;
     private String lastupdated;
-//    private List<Operator> operators = new ArrayList<Operator>();
+    private List<Operator> operators = new ArrayList<Operator>();
 
-    public int getStopid() {
+    public String getStopid() {
         return stopid;
     }
 
-    public void setStopid(int stopid) {
+    public void setStopid(String stopid) {
         this.stopid = stopid;
     }
 
@@ -65,19 +66,19 @@ public class Stop extends Model {
         this.fullnamelocalized = fullnamelocalized;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -89,11 +90,11 @@ public class Stop extends Model {
         this.lastupdated = lastupdated;
     }
 
-//    public List<Operator> getOperators() {
-//        return operators;
-//    }
-//
-//    public void setOperators(List<Operator> operators) {
-//        this.operators = operators;
-//    }
+    public List<Operator> getOperators() {
+        return operators;
+    }
+
+    public void setOperators(List<Operator> operators) {
+        this.operators = operators;
+    }
 }

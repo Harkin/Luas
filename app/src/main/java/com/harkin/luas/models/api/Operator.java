@@ -1,4 +1,4 @@
-package com.harkin.luas.models;
+package com.harkin.luas.models.api;
 
 import java.util.ArrayList;
 import java.util.List;

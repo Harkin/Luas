@@ -1,18 +1,19 @@
-package com.harkin.luas.models;
+package com.harkin.luas.models.api;
 
-import java.util.ArrayList;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
- * Created by henry on 14/07/2014.
+ * Created by henry on 15/07/2014.
  */
-public class LuasTimeResponse {
+public class StopResponse {
     private String errorcode;
     private String errormessage;
     private int numberofresults;
-    private String stopid;
     private String timestamp;
-    private List<Luas> results = new ArrayList<Luas>();
+ @SerializedName("results")
+    private List<Stop> stops;
 
     public String getErrorcode() {
         return errorcode;
@@ -38,14 +39,6 @@ public class LuasTimeResponse {
         this.numberofresults = numberofresults;
     }
 
-    public String getStopid() {
-        return stopid;
-    }
-
-    public void setStopid(String stopid) {
-        this.stopid = stopid;
-    }
-
     public String getTimestamp() {
         return timestamp;
     }
@@ -54,11 +47,11 @@ public class LuasTimeResponse {
         this.timestamp = timestamp;
     }
 
-    public List<Luas> getResults() {
-        return results;
+    public List<Stop> getStops() {
+        return stops;
     }
 
-    public void setResults(List<Luas> results) {
-        this.results = results;
+    public void setStops(List<Stop> stops) {
+        this.stops = stops;
     }
 }

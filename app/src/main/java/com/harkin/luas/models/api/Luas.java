@@ -1,4 +1,4 @@
-package com.harkin.luas.models;
+package com.harkin.luas.models.api;
 
 /**
  * Created by henry on 14/07/2014.

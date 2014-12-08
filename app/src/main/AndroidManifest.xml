@@ -3,16 +3,32 @@
     package="com.harkin.luas" >
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:name="com.activeandroid.app.Application"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:name="com.harkin.luas.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+
+        </activity>
+
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="Stops.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="1" />
+
+        <activity
+            android:name="com.harkin.luas.GeoFences"
+            android:label="@string/title_activity_geo_fences" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,10 +36,15 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name="com.harkin.luas.services.GeofenceIntentService"
+            android:label="@string/app_name"
+            android:exported="false" />
 
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
 
-        <meta-data android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

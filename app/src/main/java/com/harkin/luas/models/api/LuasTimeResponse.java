@@ -1,17 +1,18 @@
-package com.harkin.luas.models;
+package com.harkin.luas.models.api;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by henry on 15/07/2014.
+ * Created by henry on 14/07/2014.
  */
-public class StopResponse {
+public class LuasTimeResponse {
     private String errorcode;
     private String errormessage;
     private int numberofresults;
+    private String stopid;
     private String timestamp;
-    private List<Stop> results = new ArrayList<Stop>();
+    private List<Luas> results = new ArrayList<Luas>();
 
     public String getErrorcode() {
         return errorcode;
@@ -37,6 +38,14 @@ public class StopResponse {
         this.numberofresults = numberofresults;
     }
 
+    public String getStopid() {
+        return stopid;
+    }
+
+    public void setStopid(String stopid) {
+        this.stopid = stopid;
+    }
+
     public String getTimestamp() {
         return timestamp;
     }
@@ -45,11 +54,11 @@ public class StopResponse {
         this.timestamp = timestamp;
     }
 
-    public List<Stop> getResults() {
+    public List<Luas> getResults() {
         return results;
     }
 
-    public void setResults(List<Stop> results) {
+    public void setResults(List<Luas> results) {
         this.results = results;
     }
 }
