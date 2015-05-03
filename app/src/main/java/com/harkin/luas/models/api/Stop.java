@@ -1,100 +1,73 @@
 package com.harkin.luas.models.api;
 
+import com.harkin.luas.models.Line;
+
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by henry on 15/07/2014.
- */
 public class Stop {
-    private String stopid;
-    private String displaystopid;
-    private String shortname;
-    private String shortnamelocalized;
-    private String fullname;
-    private String fullnamelocalized;
-    private double latitude;
-    private double longitude;
-    private String lastupdated;
-    private List<Operator> operators = new ArrayList<Operator>();
+    private static final String LUAS = "LUAS";
 
-    public String getStopid() {
-        return stopid;
+    private final String stopId;
+    private final String displayName;
+    private final Line line;
+    private final double longitude;
+    private final double latitude;
+
+    public Stop(Builder builder) {
+        stopId = builder.stopid == null ? "" : builder.stopid;
+        longitude = builder.longitude;
+        latitude = builder.latitude;
+
+        if (builder.operators != null && !builder.operators.isEmpty()) {
+            line = builder.operators.get(0).build().getLine();
+        } else {
+            line = Line.UNKNOWN;
+        }
+
+        if (builder.fullname != null && !builder.fullname.isEmpty()) {
+            displayName = builder.fullname.replace(LUAS, "").trim();
+        } else if (builder.displaystopid != null && !builder.displaystopid.isEmpty()) {
+            displayName = builder.displaystopid.replace(LUAS, "").trim();
+        } else {
+            displayName = "";
+        }
     }
 
-    public void setStopid(String stopid) {
-        this.stopid = stopid;
+    public static class Builder {
+        private String stopid;
+        private String displaystopid;
+        private String fullname;
+        private double longitude;
+        private double latitude;
+        private List<Operator.Builder> operators = new ArrayList<>();
+
+        public Stop build() {
+            return new Stop(this);
+        }
     }
 
-    public String getDisplaystopid() {
-        return displaystopid;
+    // region getters
+
+    public String getStopId() {
+        return stopId;
     }
 
-    public void setDisplaystopid(String displaystopid) {
-        this.displaystopid = displaystopid;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public String getShortname() {
-        return shortname;
-    }
-
-    public void setShortname(String shortname) {
-        this.shortname = shortname;
-    }
-
-    public String getShortnamelocalized() {
-        return shortnamelocalized;
-    }
-
-    public void setShortnamelocalized(String shortnamelocalized) {
-        this.shortnamelocalized = shortnamelocalized;
-    }
-
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-
-    public String getFullnamelocalized() {
-        return fullnamelocalized;
-    }
-
-    public void setFullnamelocalized(String fullnamelocalized) {
-        this.fullnamelocalized = fullnamelocalized;
+    public Line getLine() {
+        return line;
     }
 
     public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
     public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getLastupdated() {
-        return lastupdated;
-    }
-
-    public void setLastupdated(String lastupdated) {
-        this.lastupdated = lastupdated;
-    }
-
-    public List<Operator> getOperators() {
-        return operators;
-    }
-
-    public void setOperators(List<Operator> operators) {
-        this.operators = operators;
-    }
+    // endregion
 }

@@ -1,57 +1,37 @@
 package com.harkin.luas.models.api;
 
-import com.google.gson.annotations.SerializedName;
-
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by henry on 15/07/2014.
- */
 public class StopResponse {
-    private String errorcode;
-    private String errormessage;
-    private int numberofresults;
-    private String timestamp;
- @SerializedName("results")
-    private List<Stop> stops;
+    private final List<Stop> stops = new ArrayList<>();
 
-    public String getErrorcode() {
-        return errorcode;
+    public StopResponse() {
+        this(new Builder());
     }
 
-    public void setErrorcode(String errorcode) {
-        this.errorcode = errorcode;
+    public StopResponse(Builder builder) {
+        if (builder.results != null) {
+            for (Stop.Builder stopBuilder : builder.results) {
+                stops.add(stopBuilder.build());
+            }
+        }
     }
 
-    public String getErrormessage() {
-        return errormessage;
-    }
+    public static class Builder {
+        private List<Stop.Builder> results;
 
-    public void setErrormessage(String errormessage) {
-        this.errormessage = errormessage;
-    }
+        public Builder withStops(List<Stop.Builder> stops) {
+            results = stops;
+            return this;
+        }
 
-    public int getNumberofresults() {
-        return numberofresults;
-    }
-
-    public void setNumberofresults(int numberofresults) {
-        this.numberofresults = numberofresults;
-    }
-
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+        public StopResponse build() {
+            return new StopResponse(this);
+        }
     }
 
     public List<Stop> getStops() {
         return stops;
-    }
-
-    public void setStops(List<Stop> stops) {
-        this.stops = stops;
     }
 }

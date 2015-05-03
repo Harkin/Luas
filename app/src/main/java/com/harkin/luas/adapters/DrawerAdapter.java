@@ -12,9 +12,6 @@ import com.harkin.luas.R;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by henry on 20/07/2014.
- */
 public class DrawerAdapter extends BaseExpandableListAdapter {
     private List<String> headers;
     private Map<String, List<String>> children;

@@ -2,63 +2,95 @@ package com.harkin.luas.api;
 
 import android.content.Context;
 
-import com.android.volley.Request.Method;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
-import com.harkin.luas.models.api.LuasTimeResponse;
+import com.google.gson.Gson;
+import com.harkin.luas.BusWrapper;
+import com.harkin.luas.R;
 import com.harkin.luas.models.api.StopResponse;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
+import com.harkin.luas.models.api.StopTimetableResponse;
 
-/**
- * Created by henry on 14/07/2014.
- */
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 public class LuasAPI {
+    private static final String BASE_URL = "http://94.236.101.9/RTPIPublicService/service.svc/";
     private static LuasAPI instance;
 
-    private final OkHttpClient client;
-    private final Request.Builder builder;
-    private RequestQueue mRequestQueue;
+    private final LuasApiInterface luasApi;
 
-    public static synchronized LuasAPI getInstance(Context context) {
+    public LuasAPI() {
+        luasApi = new RestAdapter.Builder()
+                .setEndpoint(BASE_URL)
+                .build()
+                .create(LuasApiInterface.class);
+    }
+
+    public static synchronized LuasAPI getInstance() {
         if (instance == null) {
-            instance = new LuasAPI(context);
+            instance = new LuasAPI();
         }
         return instance;
     }
 
-    public LuasAPI(Context c) {
-        client = new OkHttpClient();
-        builder =new Request.Builder();
-        mRequestQueue = Volley.newRequestQueue(c.getApplicationContext());
+    public void getLuasTimes(String stopId) {
+        String endUrl = BASE_URL + "realtimebusinformation?stopid=" + stopId + "&maxresults=500&format=Json&deviceid=3638";
+        Map<String, Object> params = new HashMap<>();
+        params.put("stopid", stopId);
+        params.put("maxresults", 500);
+        params.put("format", "Json");
+        params.put("deviceid", 1);
+        luasApi.getLuasTimes(params, new Callback<StopTimetableResponse.Builder>() {
+            @Override public void success(StopTimetableResponse.Builder builder, Response response) {
+                BusWrapper.getInstance().post(builder.build());
+            }
+
+            @Override public void failure(RetrofitError error) {
+
+            }
+        });
     }
 
+    public void updateStops() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("operator", "luas");
+        params.put("deviceid", 1);
 
-    private static final String baseUrl = "http://94.236.101.9/RTPIPublicService/service.svc/";
+        luasApi.getStops(params, new Callback<StopResponse.Builder>() {
+            @Override public void success(StopResponse.Builder builder, Response response) {
+                BusWrapper.getInstance().post(builder.build());
+            }
 
-    public void getLuasTimes(String stopId, Response.Listener<LuasTimeResponse> listener, Response.ErrorListener errorListener) {
-        String endUrl = baseUrl + "realtimebusinformation?stopid=" + stopId + "&maxresults=500&format=Json&deviceid=3638";
-        GsonRequest request = new GsonRequest<LuasTimeResponse>(Method.GET, endUrl, LuasTimeResponse.class, listener, errorListener);
-        mRequestQueue.add(request);
+            @Override public void failure(RetrofitError error) {
+
+            }
+        });
     }
 
-    public void getStops(Response.Listener<StopResponse> listener, Response.ErrorListener errorListener) {
-        String endUrl = baseUrl + "busstopinformation?deviceid=3638&operator=luas";
-        GsonRequest request = new GsonRequest<StopResponse>(Method.GET, endUrl, StopResponse.class, listener, errorListener);
-        mRequestQueue.add(request);
+    public void getStops(Context context) {
+        InputStream is = context.getResources().openRawResource(R.raw.stops);
+        Reader reader = new InputStreamReader(is);
+        StopResponse response = new Gson().fromJson(reader, StopResponse.Builder.class).build();
+
+        try {
+            is.close();
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (response != null) {
+            BusWrapper.getInstance().post(response);
+        } else {
+            updateStops();
+        }
     }
 
-    public void getLuasTimes(String stopId, Callback callback) {
-        String endUrl = baseUrl + "realtimebusinformation?stopid=" + stopId + "&maxresults=500&format=Json&deviceid=3638";
-        Request request = builder.url(endUrl).build();
-        client.newCall(request).enqueue(callback);
-    }
-
-    public void getStops(Callback callback) {
-        String endUrl = baseUrl + "busstopinformation?deviceid=3638&operator=luas";
-        Request request = builder.url(endUrl).build();
-        client.newCall(request).enqueue(callback);
-    }
 }
