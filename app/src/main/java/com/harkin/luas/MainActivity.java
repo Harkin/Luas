@@ -1,71 +1,73 @@
 package com.harkin.luas;
 
 import android.app.Activity;
-import android.location.Location;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.maps.model.LatLng;
-import com.harkin.luas.models.Stop;
+import com.harkin.luas.models.api.StopTimetable;
 
 import java.util.List;
 
+/**
+ * @author Henry Larkin @harkinabout
+ */
+public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener {
+    private SwipeRefreshLayout swipeLayout;
 
-public class MainActivity extends Activity {
-    private List<Stop> redline;
-    private List<Stop> greenline;
+    private Presenter presenter;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        loadStations();
-        findClosestStation(null);
+        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setEnabled(false);
+
+        presenter = new Presenter(this);
+
+        BusWrapper.getInstance().register(presenter);
+        BusWrapper.getInstance().register(this);
+
+        presenter.loadStops();
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+    @Override protected void onDestroy() {
+        BusWrapper.getInstance().unregister(presenter);
+        BusWrapper.getInstance().unregister(this);
+        super.onDestroy();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+    @Override public void onRefresh() {
+        presenter.refresh();
+        swipeLayout.setEnabled(false);
+    }
+
+    public void displayTimes(String currStop, List<StopTimetable> timetables) {
+        ((TextView) findViewById(R.id.stopName)).setText(currStop);
+
+        LinearLayout inbound = (LinearLayout) findViewById(R.id.inbound);
+        LinearLayout outbound = (LinearLayout) findViewById(R.id.outbound);
+
+        inbound.removeAllViews();
+        outbound.removeAllViews();
+
+        for (StopTimetable timetable : timetables) {
+            LinearLayout ll;
+            if (timetable.getDirection().equals("Outbound")) {
+                ll = outbound;
+            } else {
+                ll = inbound;
+            }
+
+            View row = getLayoutInflater().inflate(R.layout.row_stop, ll);
+            ((TextView) row.findViewById(R.id.destination)).setText(timetable.getDestination());
+            ((TextView) row.findViewById(R.id.time)).setText(timetable.getDisplayTime());
         }
-        return super.onOptionsItemSelected(item);
-    }
 
-    private void loadStations() {
-
-    }
-
-    private void findClosestStation(LatLng myLoc) {
-        int closest;
-        float[] results = new float[3];
-        Location.distanceBetween(myLoc.latitude, myLoc.longitude, 0.0,0.0, results);
-    }
-
-    //Maybe? Is play services location the best one to use, I unno
-    //Should probably abstract all location stuff to a seperate class
-    private boolean checkPlayServicesAvailable() {
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        // If Google Play services is available
-        if (ConnectionResult.SUCCESS == resultCode) {
-            return true;
-        } else {
-            return false;
-        }
+        swipeLayout.setEnabled(true);
     }
 }

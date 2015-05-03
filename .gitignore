@@ -1,5 +1,18 @@
+# generated files
+bin/
+gen/
+
+# Local configuration file (sdk path, etc)
+local.properties
+gradle.properties
+
+# Android Studio
+.idea
 .gradle
-/local.properties
-/.idea/workspace.xml
-.DS_Store
+/*/build
 /build
+/release
+*.iml
+
+# Mac stuff
+.DS_Store
