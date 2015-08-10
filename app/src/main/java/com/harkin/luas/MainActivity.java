@@ -6,10 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
-import com.harkin.luas.network.models.Timetable;
 import com.harkin.luas.network.models.Tram;
 
 import java.util.ArrayList;
@@ -26,15 +24,12 @@ import io.fabric.sdk.android.Fabric;
 public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     @Bind(R.id.swipeLayout) SwipeRefreshLayout swipeLayout;
     @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.stopName) TextView stopName;
     @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
 
+    private final List<Tram> trams = new ArrayList<>();
+
     private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
-
     private Presenter presenter;
-
-    private final List<Tram> test = new ArrayList<>();
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,10 +44,10 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         presenter = new Presenter(this);
 
-        layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        adapter = new MyAdapter(test);
+        adapter = new MyAdapter(this, trams);
         mRecyclerView.setAdapter(adapter);
 
         presenter.loadStops();
@@ -67,14 +62,13 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         presenter.refresh();
     }
 
-    @DebugLog public void displayTimes(String currStop, Timetable timetable) {
+    @DebugLog public void displayTimes(String currStop, List<Tram> displayTrams) {
         swipeLayout.setRefreshing(false);
 
-        stopName.setText(String.format(getString(R.string.stopName), currStop));
+        toolbar.setSubtitle( currStop);
 
-        test.clear();
-        test.addAll(timetable.getInboundTrams());
-        test.addAll(timetable.getOutboundTrams());
+        trams.clear();
+        trams.addAll(displayTrams);
         adapter.notifyDataSetChanged();
     }
 }

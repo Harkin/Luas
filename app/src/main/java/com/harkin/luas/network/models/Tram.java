@@ -33,9 +33,13 @@ public class Tram {
         @Attribute(name = "destination")
         private String destination;
 
+        public Builder withDueTime(String dueTime) {
+            this.dueTime = dueTime;
+            return this;
+        }
+
         public Tram build() {
             return new Tram(this);
         }
     }
-
 }

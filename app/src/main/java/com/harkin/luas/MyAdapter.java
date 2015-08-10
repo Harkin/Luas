@@ -1,60 +1,38 @@
 package com.harkin.luas;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import com.hannesdorfmann.adapterdelegates.AdapterDelegatesManager;
 import com.harkin.luas.network.models.Tram;
 
 import java.util.List;
 
-import butterknife.ButterKnife;
+public class MyAdapter extends RecyclerView.Adapter {
+    private final AdapterDelegatesManager<List<Tram>> delegatesManager;
+    private final List<Tram> trams;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-    private List<Tram> dataset;
-
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView destination;
-        public final TextView time;
-
-        public ViewHolder(View v) {
-            super(v);
-            destination = ButterKnife.findById(v, R.id.destination);
-            time = ButterKnife.findById(v, R.id.time);
-        }
+    public MyAdapter(Activity activity, List<Tram> myDataset) {
+        trams = myDataset;
+        delegatesManager = new AdapterDelegatesManager<>();
+        delegatesManager.addDelegate(new LuasAdapterDelegate(activity.getLayoutInflater(), 0));
+        delegatesManager.addDelegate(new HeaderAdapterDelegate(activity.getLayoutInflater(), 1));
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(List<Tram> myDataset) {
-        dataset = myDataset;
+    @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return delegatesManager.onCreateViewHolder(parent, viewType);
     }
 
-    // Create new views (invoked by the layout manager)
-    @Override public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v =  LayoutInflater.from(parent.getContext()).inflate(R.layout.row_stop, parent, false);
-        return new ViewHolder(v);
-    }
-
-    // Replace the contents of a view (invoked by the layout manager)
-    @Override public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.destination.setText(dataset.get(position).getDestination());
-        holder.time.setText(dataset.get(position).getDueTime());
-
+    @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        delegatesManager.onBindViewHolder(trams, position, holder);
     }
 
     @Override public int getItemViewType(int position) {
-        return super.getItemViewType(position);
+        return delegatesManager.getItemViewType(trams, position);
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override public int getItemCount() {
-        return dataset.size();
+        return trams.size();
     }
 }

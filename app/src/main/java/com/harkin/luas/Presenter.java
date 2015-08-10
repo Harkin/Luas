@@ -7,6 +7,7 @@ import com.harkin.luas.network.LuasApi;
 import com.harkin.luas.network.models.Stop;
 import com.harkin.luas.network.models.StopList;
 import com.harkin.luas.network.models.Timetable;
+import com.harkin.luas.network.models.Tram;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,15 +32,20 @@ public class Presenter {
         LuasApi.getInstance().getStops(activity)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onStopsLoaded);
+                .subscribe(this::onStopsLoaded,
+                        throwable -> {/* nom nom error */});
+        //todo sensible error handling if stops are unavailable
     }
 
     public void refresh() {
         if (!stops.isEmpty()) {
             currentStop = findClosestStop(getLocation());
             LuasApi.getInstance().getTrams(currentStop.getShortName())
+                    .map(this::createTramsList)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this::luasTimes);
+                    .subscribe(this::displayLuasTimes,
+                            throwable -> {/* nom nom error */});
+            //todo retry grabbing trams if there's an error
         }
     }
 
@@ -48,9 +54,18 @@ public class Presenter {
         refresh();
     }
 
-    private void luasTimes(Timetable response) {
+    private void displayLuasTimes(List<Tram> trams) {
         //todo sort due times
-        activity.displayTimes(currentStop.getDisplayName(), response);
+        activity.displayTimes(currentStop.getDisplayName(), trams);
+    }
+
+    private List<Tram> createTramsList(Timetable timetable) {
+        List<Tram> trams = new ArrayList<>();
+        trams.add(new Tram.Builder().withDueTime("Inbound").build());
+        trams.addAll(timetable.getInboundTrams());
+        trams.add(new Tram.Builder().withDueTime("Outbound").build());
+        trams.addAll(timetable.getOutboundTrams());
+        return trams;
     }
 
     @DebugLog private Stop findClosestStop(Location location) {
@@ -91,7 +106,7 @@ public class Presenter {
             //TODO if no last known loc available, poll for current loc.
             bestLocation = null;
         }
-
+//https://github.com/mcharmas/Android-ReactiveLocation <-- looks really nifty!
         return bestLocation;
     }
 }
