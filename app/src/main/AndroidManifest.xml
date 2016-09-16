@@ -16,15 +16,16 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
+        </activity>
+
+        <activity-alias
+            android:name=".Launcher"
+            android:targetActivity=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="96ed25ff77e6c783ec76bc36daa7daf5159e861b" />
+        </activity-alias>
+
     </application>
 </manifest>

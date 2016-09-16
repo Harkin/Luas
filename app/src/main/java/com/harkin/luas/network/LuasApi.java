@@ -13,20 +13,23 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 import hugo.weaving.DebugLog;
-import retrofit.RestAdapter;
-import retrofit.converter.SimpleXMLConverter;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 import rx.Observable;
+import rx.schedulers.Schedulers;
 
 public class LuasApi {
-    private static final String BASE_URL = "http://luasforecasts.rpa.ie/xml";
+    private static final String BASE_URL = "http://luasforecasts.rpa.ie/xml/";
     private static final LuasApi INSTANCE = new LuasApi();
 
     private final LuasService luasApi;
 
     public LuasApi() {
-        luasApi = new RestAdapter.Builder()
-                .setEndpoint(BASE_URL)
-                .setConverter(new SimpleXMLConverter())
+       luasApi = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(SimpleXmlConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .build()
                 .create(LuasService.class);
     }

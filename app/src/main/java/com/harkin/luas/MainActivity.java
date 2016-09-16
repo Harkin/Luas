@@ -1,13 +1,17 @@
 package com.harkin.luas;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-import com.crashlytics.android.Crashlytics;
 import com.harkin.luas.network.models.Tram;
 
 import java.util.ArrayList;
@@ -16,7 +20,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import hugo.weaving.DebugLog;
-import io.fabric.sdk.android.Fabric;
 
 /**
  * @author Henry Larkin @harkinabout
@@ -33,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -51,6 +53,18 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         mRecyclerView.setAdapter(adapter);
 
         presenter.loadStops();
+
+        if (!hasLocationPermission()) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
+    }
+
+    @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 1 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            onRefresh();
+        }
     }
 
     @Override protected void onResume() {
@@ -59,16 +73,22 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     @Override public void onRefresh() {
-        presenter.refresh();
+        if (hasLocationPermission()) {
+            presenter.refresh();
+        }
     }
 
     @DebugLog public void displayTimes(String currStop, List<Tram> displayTrams) {
         swipeLayout.setRefreshing(false);
 
-        toolbar.setSubtitle( currStop);
+        toolbar.setSubtitle(currStop);
 
         trams.clear();
         trams.addAll(displayTrams);
         adapter.notifyDataSetChanged();
+    }
+
+    private boolean hasLocationPermission() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 }
