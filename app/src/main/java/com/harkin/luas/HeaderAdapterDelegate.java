@@ -12,8 +12,6 @@ import com.harkin.luas.network.models.Tram;
 
 import java.util.List;
 
-import butterknife.ButterKnife;
-
 public class HeaderAdapterDelegate extends AbsAdapterDelegate<List<Tram>> {
     private final LayoutInflater inflater;
 
@@ -43,7 +41,7 @@ public class HeaderAdapterDelegate extends AbsAdapterDelegate<List<Tram>> {
 
         public HeaderViewHolder(View v) {
             super(v);
-            message = ButterKnife.findById(v, R.id.destination);
+            message = v.findViewById(R.id.destination);
         }
     }
 }

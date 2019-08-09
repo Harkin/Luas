@@ -12,8 +12,6 @@ import com.harkin.luas.network.models.Tram;
 
 import java.util.List;
 
-import butterknife.ButterKnife;
-
 public class LuasAdapterDelegate extends AbsAdapterDelegate<List<Tram>> {
     private final LayoutInflater inflater;
 
@@ -45,8 +43,8 @@ public class LuasAdapterDelegate extends AbsAdapterDelegate<List<Tram>> {
 
         public LuasViewHolder(View v) {
             super(v);
-            destination = ButterKnife.findById(v, R.id.destination);
-            time = ButterKnife.findById(v, R.id.time);
+            destination = v.findViewById(R.id.destination);
+            time = v.findViewById(R.id.time);
         }
     }
 }

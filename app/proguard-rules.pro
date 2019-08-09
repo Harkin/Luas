@@ -31,9 +31,6 @@
     @butterknife.* <methods>;
 }
 
-# retrolambda
--dontwarn java.lang.invoke**
-
 # retrofit
 -dontwarn rx.**
 -dontwarn retrofit.appengine.UrlFetchClient

@@ -17,19 +17,15 @@ import com.harkin.luas.network.models.Tram;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import hugo.weaving.DebugLog;
 
-/**
- * @author Henry Larkin @harkinabout
- */
 public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
-    @Bind(R.id.swipeLayout) SwipeRefreshLayout swipeLayout;
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
 
     private final List<Tram> trams = new ArrayList<>();
+
+    private SwipeRefreshLayout swipeLayout;
+    private Toolbar toolbar;
+    private RecyclerView recyclerView;
 
     private RecyclerView.Adapter adapter;
     private Presenter presenter;
@@ -37,7 +33,10 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+
+        swipeLayout= findViewById(R.id.swipeLayout);
+        toolbar = findViewById(R.id.toolbar);
+        recyclerView = findViewById(R.id.recyclerView);
 
         setSupportActionBar(toolbar);
 
@@ -47,10 +46,10 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         presenter = new Presenter(this);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 
         adapter = new MyAdapter(this, trams);
-        mRecyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
 
         presenter.loadStops();
 
