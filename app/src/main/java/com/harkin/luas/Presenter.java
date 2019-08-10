@@ -4,6 +4,7 @@ import android.location.Location;
 import android.location.LocationManager;
 
 import com.harkin.luas.network.LuasApi;
+import com.harkin.luas.network.models.Line;
 import com.harkin.luas.network.models.Stop;
 import com.harkin.luas.network.models.StopList;
 import com.harkin.luas.network.models.Timetable;
@@ -18,39 +19,40 @@ import rx.schedulers.Schedulers;
 
 import static android.content.Context.LOCATION_SERVICE;
 
-public class Presenter {
+class Presenter {
     private final MainActivity activity;
 
     private final List<Stop> stops = new ArrayList<>();
     private Stop currentStop;
 
-    public Presenter(MainActivity activity) {
+    Presenter(MainActivity activity) {
         this.activity = activity;
     }
 
-    public void loadStops() {
+    void loadStops() {
         LuasApi.getInstance().getStops(activity)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onStopsLoaded,
-                        throwable -> {/* nom nom error */});
-        //todo sensible error handling if stops are unavailable
+                        throwable -> { /* nom nom error */ });
+        //todo sensible error handling if old_stops are unavailable
     }
 
-    public void refresh() {
+    void refresh() {
         if (!stops.isEmpty()) {
             currentStop = findClosestStop(getLocation());
             LuasApi.getInstance().getTrams(currentStop.getShortName())
                     .map(this::createTramsList)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this::displayLuasTimes,
-                            throwable -> {/* nom nom error */});
+                            throwable -> { /* nom nom error */ });
             //todo retry grabbing trams if there's an error
         }
     }
 
     private void onStopsLoaded(StopList response) {
-        stops.addAll(response.getStops());
+        List<Line> lines = response.getLines();
+        lines.forEach(line -> stops.addAll(line.getStops()));
         refresh();
     }
 

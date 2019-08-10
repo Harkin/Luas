@@ -1,10 +1,10 @@
 package com.harkin.luas.network.models;
 
+import org.simpleframework.xml.Attribute;
+
 public class Stop {
     private final String shortName;
     private final String displayName;
-    private final String displayIrishName;
-    private final Line line;
     private final double longitude;
     private final double latitude;
 
@@ -12,19 +12,12 @@ public class Stop {
         this(new Builder());
     }
 
-    public Stop(Builder builder) {
-        shortName = builder.shortName != null ? builder.shortName : "";
-        displayName = builder.displayName != null ? builder.displayName : "";
-        displayIrishName = builder.displayIrishName != null ? builder.displayIrishName : "";
-        line = Line.toLine(builder.line);
-        if (builder.coordinates != null) {
-            longitude = builder.coordinates.getLongitude();
-            latitude = builder.coordinates.getLatitude();
-        } else {
-            //todo maybe more sensible defaults here
-            longitude = 0;
-            latitude = 0;
-        }
+    private Stop(Builder builder) {
+        shortName = builder.abrev != null ? builder.abrev : "";
+        displayName = builder.pronunciation != null ? builder.pronunciation : "";
+
+        longitude = builder.longitude;
+        latitude = builder.lat;
     }
 
     // region getters
@@ -37,14 +30,6 @@ public class Stop {
         return displayName;
     }
 
-    public String getDisplayIrishName() {
-        return displayIrishName;
-    }
-
-    public Line getLine() {
-        return line;
-    }
-
     public double getLongitude() {
         return longitude;
     }
@@ -55,28 +40,24 @@ public class Stop {
 
     // endregion
 
-    public static class Builder {
-        private String shortName;
-        private String displayName;
-        private String displayIrishName;
-        private String line;
-        private Coordinates coordinates;
+    static class Builder {
+        @Attribute
+        private String abrev;
+        @Attribute
+        private String pronunciation;
 
-        public Stop build() {
-            return new Stop(this);
-        }
-    }
-
-    private static class Coordinates {
-        private double latitude;
+        @Attribute(name = "long")
         private double longitude;
+        @Attribute
+        private double lat;
 
-        private double getLatitude() {
-            return latitude;
-        }
+        @Attribute
+        private int isParkRide;
+        @Attribute
+        private int isCycleRide;
 
-        private double getLongitude() {
-            return longitude;
+        Stop build() {
+            return new Stop(this);
         }
     }
 }

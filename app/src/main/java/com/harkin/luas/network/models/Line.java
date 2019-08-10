@@ -1,16 +1,48 @@
 package com.harkin.luas.network.models;
 
-import java.util.Locale;
+import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
 
-public enum Line {
-    GREEN, RED, UNKNOWN;
+import java.util.ArrayList;
+import java.util.List;
 
-    // like valueOf only with a default
-    public static Line toLine(String enumString) {
-        try {
-            return valueOf(enumString.toUpperCase(Locale.ENGLISH));
-        } catch (IllegalArgumentException | NullPointerException ignoredx) {
-            return UNKNOWN;
+public class Line {
+    private final List<Stop> stops = new ArrayList<>();
+    private final String name;
+
+    public Line() {
+        this(new Line.Builder());
+    }
+
+    public Line(Line.Builder builder) {
+        if (builder.stops != null) {
+            for (Stop.Builder stopBuilder : builder.stops) {
+                if (stopBuilder != null) {
+                    stops.add(stopBuilder.build());
+                }
+            }
+        }
+        name = builder.name != null ? builder.name : "";
+    }
+
+    public List<Stop> getStops() {
+        return stops;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Root
+    static class Builder {
+        @ElementList(inline = true, entry = "stop", type = Stop.Builder.class)
+        private List<Stop.Builder> stops;
+        @Attribute
+        private String name;
+
+        Line build() {
+            return new Line(this);
         }
     }
 }

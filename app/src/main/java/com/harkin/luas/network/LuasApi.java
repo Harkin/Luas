@@ -2,17 +2,17 @@ package com.harkin.luas.network;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
 import com.harkin.luas.R;
 import com.harkin.luas.network.models.StopList;
 import com.harkin.luas.network.models.Timetable;
 
-import java.io.IOException;
+import org.simpleframework.xml.core.Persister;
+
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 
 import hugo.weaving.DebugLog;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
@@ -20,16 +20,22 @@ import rx.Observable;
 import rx.schedulers.Schedulers;
 
 public class LuasApi {
-    private static final String BASE_URL = "http://luasforecasts.rpa.ie/xml/";
-    private static final LuasApi INSTANCE = new LuasApi();
+    private static final String BASE_URL = "https://luasforecasts.rpa.ie/xml/";
+    private static LuasApi INSTANCE = new LuasApi();
 
     private final LuasService luasApi;
 
-    public LuasApi() {
-       luasApi = new Retrofit.Builder()
+    private LuasApi() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.level(HttpLoggingInterceptor.Level.BASIC);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .build();
+        luasApi = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
+                .client(client)
                 .build()
                 .create(LuasService.class);
     }
@@ -43,6 +49,7 @@ public class LuasApi {
     }
 
     public Observable<StopList> getStops(Context context) {
+//        return luasApi.getStops().map(StopList.Builder::build);
         return Observable.defer(() -> {
             StopList list = readStopsFromDisk(context);
             if (list == null) {
@@ -54,17 +61,18 @@ public class LuasApi {
     }
 
     @DebugLog private StopList readStopsFromDisk(Context context) {
-        InputStream is = context.getResources().openRawResource(R.raw.stops);
-        Reader reader = new InputStreamReader(is);
-        StopList response = new Gson().fromJson(reader, StopList.Builder.class).build();
+        InputStream stream = context.getResources().openRawResource(R.raw.stops);
 
         try {
-            is.close();
-            reader.close();
-        } catch (IOException e) {
-            //todo
+            StopList response = new Persister().read(StopList.Builder.class, stream).build();
+
+            stream.close();
+
+            return response;
+        } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
+
         }
-        return response;
     }
 }
